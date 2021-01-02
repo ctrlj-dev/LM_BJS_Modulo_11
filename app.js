@@ -35,7 +35,14 @@ class ReservasHotel {
 
     calculateExtraPricePerPax = (pax) => (pax - 1) * this.extraPricePerPax;
 
-    calculateBreakfastPrice = (desayuno, pax, noches) => desayuno ? true : ( pax * noches ) * this.breakfastPrice;  
+    calculateBreakfastPrice(desayuno, pax, noches) {
+        if(desayuno == true) {
+           return  pax * noches * this.breakfastPrice
+        }else {
+           return 0;
+        }
+    }
+    //calculateBreakfastPrice = (desayuno, pax, noches) => desayuno ? true : ( pax * noches ) * this.breakfastPrice ? false : 25000;  
 
     get total() {
         return this._total;
@@ -79,7 +86,7 @@ class ReservasClienteNormal extends ReservasHotel {
             noches,
             tipoHabitacion,
             desayuno
-        }) => acumulado + (noches * this.calcularPrecioHabitacion(tipoHabitacion)) + this.calculateExtraPricePerPax(pax) + this.calculateBreakfastPrice(desayuno, pax,noches), 0);
+        }) => acumulado + ( noches * this.calcularPrecioHabitacion(tipoHabitacion) ) + this.calculateExtraPricePerPax(pax) + this.calculateBreakfastPrice(desayuno, pax,noches), 0);
     }
 
 
@@ -90,7 +97,7 @@ class ReservasClienteNormal extends ReservasHotel {
             noches,
             tipoHabitacion,
             desayuno
-        }) => acumulado + ( (noches * this.calcularPrecioHabitacion(tipoHabitacion)) + this.calculateExtraPricePerPax(pax) + this.calculateBreakfastPrice(desayuno, pax,noches) ) * this.habIVA, 0);
+        }) => acumulado + ( ( noches * this.calcularPrecioHabitacion(tipoHabitacion)) + this.calculateExtraPricePerPax(pax) + this.calculateBreakfastPrice(desayuno, pax,noches) ) * this.habIVA, 0);
     }
 
 }  // Fin de la clase hijo ReservasClienteNormal
@@ -109,7 +116,7 @@ class ReservasTourOperador extends ReservasHotel {
     constructor() {
         super();
         this.precioHabTourOperador = 100;
-        this.descTourOperador = 0.15;
+        this.descTourOperador = 0.75;
     }
 
     calculaSubtotal() {
@@ -117,7 +124,7 @@ class ReservasTourOperador extends ReservasHotel {
             pax,
             noches,
             desayuno
-        }) => acumulado + (noches * this.precioHabTourOperador) + this.calculateExtraPricePerPax(pax) + this.calculateBreakfastPrice(desayuno, pax,noches) * this.descTourOperador, 0);
+        }) => acumulado + ( (noches * this.precioHabTourOperador) + this.calculateExtraPricePerPax(pax) + this.calculateBreakfastPrice(desayuno, pax,noches) ) * this.descTourOperador, 0);
     }
 
 
@@ -126,7 +133,7 @@ class ReservasTourOperador extends ReservasHotel {
             pax,
             noches,         
             desayuno
-        }) => acumulado + ( ( (noches * this.precioHabTourOperador) + this.calculateExtraPricePerPax(pax) + this.calculateBreakfastPrice(desayuno, pax,noches) ) * this.descTourOperador) * this.habIVA, 0);
+        }) => acumulado + ( ( (noches * this.precioHabTourOperador) + this.calculateExtraPricePerPax(pax) + this.calculateBreakfastPrice(desayuno,pax,noches) ) * this.descTourOperador) * this.habIVA, 0);
     }
 } // Fin de la clase hijo ReservasTourOperador
 
