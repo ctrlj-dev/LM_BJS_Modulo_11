@@ -42,7 +42,6 @@ class ReservasHotel {
            return 0;
         }
     }
-    //calculateBreakfastPrice = (desayuno, pax, noches) => desayuno ? true : ( pax * noches ) * this.breakfastPrice ? false : 25000;  
 
     get total() {
         return this._total;
